@@ -1,0 +1,23 @@
+{
+  "name": "CubeSat Simulator",
+  "version": "0.0.0",
+  "authors": [
+    "Maxwell Ciotti <max@mdc.io>"
+  ],
+  "description": "Simulates a CubeSat in orbit around earth",
+  "keywords": [
+    "cubesat",
+    "simulation",
+    "simulate",
+    "satellite"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

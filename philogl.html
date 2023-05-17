@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CubeSat Simulator</title>
+<script type="text/javascript" src="src/PhiloGL.js"></script>
+</head>
+<body>
+<canvas id="viewport" width="500" height="500"></canvas>
+<script type="text/javascript">
+
+function WebGLStart() {
+
+	var moon = new PhiloGL.O3D.Sphere({
+		nlat: 30,
+		nlong: 30,
+		radius: 2
+	});
+
+	PhiloGL("viewport", {
+		camera: {
+			position: {
+				x: 0, y: 0, z: -7
+			}
+		},
+		onError: function () {
+			console.error("Error while creating app");
+		},
+		onLoad: function (app) {
+			var gl = app.gl,
+				program = app.program,
+				scene = app.scene,
+				canvas = app.canvas,
+				camera = app.camera;
+
+			gl.clearColor(0.0, 0.0, 0.0, 1.0);
+			gl.clearDepth(1.0);
+			gl.enable(gl.DEPTH_TEST);
+			gl.depthFunc(gl.LEQUAL);
+			gl.viewport(0, 0, canvas.width, canvas.height);
+
+			scene.add(moon);
+
+			draw();
+
+			function draw () {
+				gl.clear(gl.CLEAR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+				var lights = scene.config.lights;
+				lights.enable = true;
+				lights.ambient = { r: 1.0, g: 1.0, b: 1.0 },
+				lights.directional = {
+					color: { r: 1.0, g: 1.0, b: 1.0 },
+					direction: { x: 0.0, y: 1.0, z: 0.0, r: 1.0, g: 1.0, b: 1.0 }
+				};
+				scene.render();
+				requestAnimationFrame(draw);
+			}
+		}
+	});
+}
+
+WebGLStart();
+
+</script>
+</body>
+</html>

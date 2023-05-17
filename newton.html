@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CubeSat Simulator</title>
+<script type="text/javascript" src="bower_components/pixi.js/bin/pixi.js"></script>
+<script type="text/javascript" src="bower_components/newton/newton.js"></script>
+</head>
+<body>
+<div id="viewport"></div>
+<script type="text/javascript">
+var viewport = document.getElementById("viewport"),
+	width = viewport.width = 500,
+	height = viewport.height = 500;
+
+document.body.appendChild(viewport);
+
+var renderer = Newton.PixiRenderer(viewport),
+	sim = Newton.Simulator(simulate, renderer.callback, 60, 10);
+
+var cubesat = Newton.Particle(100, 100, 10, Newton.Material({
+	weight: 2,
+	restitution: 0.5,
+	friction: 0.1
+}))
+	gravity = Newton.RadialGravity(0, 0, -4, 2);
+
+var envLayer = sim.Layer()
+	.addForce(gravity);
+
+var fixedLayer = sim.Layer()
+	.respondTo([]);
+
+var cubesatLayer = sim.Layer()
+	.addBody(cubesat)
+	.respondTo([cubesatLayer, fixedLayer, envLayer]);
+
+sim.start();
+
+function simulate(t) {
+
+}
+
+</script>
+</body>
+</html>
